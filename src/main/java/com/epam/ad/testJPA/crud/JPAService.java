@@ -20,12 +20,12 @@ public class JPAService {
     }
 
 
-    public void delete(long id){
+    public void delete(int id){
         em.remove(get(id));
 
     }
 
-    public UserEntity get(long id){
+    public UserEntity get(int id){
         return em.find(UserEntity.class, id);
     }
 

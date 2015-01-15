@@ -14,8 +14,11 @@
 </head>
 <body>
 <form action="addUserServlet" method="POST">
-    <input type="text" name="username" value="${username}">
-    <input type="text" name="password" value="${password}">
+    <label for="username">Username</label>
+
+    <input id="username" type="text" name="username" value="${username}">
+    <label for="password">Password</label>
+    <input id="password" type="text" name="password" value="${password}">
     <input type="submit" name="addUser" value="add user">
 </form>
 <hr>
@@ -31,7 +34,12 @@
                 <input type="submit" name="editUser" value="изменить" >
             </form>
         </td>
-
+        <td>
+            <form action="userDeleteServlet" method="get">
+                <input type="text" name="id" value="${us.id}" hidden="hidden">
+                <input type="submit" name="deleteUser" value="удалить" >
+            </form>
+        </td>
     </tr>
 </table>
 
