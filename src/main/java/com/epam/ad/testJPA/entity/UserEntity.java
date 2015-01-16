@@ -14,7 +14,10 @@ public class UserEntity {
     private String username;
     private String password;
     private int id;
+//    @OneToOne(mappedBy = "user")
+//    private UserInfoEntity userInfo;
     private Collection<OrderEntity> ordersById;
+    private Collection<UserInfoEntity> userInfoById;
 
     @Basic
     @Column(name = "username")
@@ -69,7 +72,7 @@ public class UserEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "userByUserid",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userid",fetch = FetchType.EAGER)
     public Collection<OrderEntity> getOrdersById() {
         return ordersById;
     }
@@ -77,6 +80,25 @@ public class UserEntity {
     public void setOrdersById(Collection<OrderEntity> ordersById) {
         this.ordersById =ordersById;
     }
+
+
+   @OneToMany(mappedBy = "userid",fetch = FetchType.EAGER)
+    public Collection<UserInfoEntity> getUserInfoById() {
+        return userInfoById;
+    }
+
+    public void setUserInfoById(Collection<UserInfoEntity> userInfoById) {
+        this.userInfoById = userInfoById;
+    }
+
+
+//    public UserInfoEntity getUserInfo() {
+//        return userInfo;
+//    }
+//
+//    public void setUserInfo(UserInfoEntity userInfo) {
+//        this.userInfo = userInfo;
+//    }
 
     @Override
     public String toString() {
