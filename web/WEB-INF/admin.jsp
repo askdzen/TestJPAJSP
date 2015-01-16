@@ -24,7 +24,16 @@
 <hr>
 
 <c:forEach items="${list}" var="us">
-<table>
+    <table border="1" bgcolor="#00bfff">
+        <caption>Список пользователей</caption>
+        <tr>
+            <th>Имя Пользователя</th>
+            <th>Пароль</th>
+            <th>Редактировать пользователя</th>
+            <th>Удалить пользователя</th>
+            <th>Заказы Пользователя</th>
+
+        </tr>
     <tr>
         <td>${us.username}</td>
         <td>${us.password}</td>
@@ -38,6 +47,12 @@
             <form action="userDeleteServlet" method="get">
                 <input type="text" name="id" value="${us.id}" hidden="hidden">
                 <input type="submit" name="deleteUser" value="удалить" >
+            </form>
+        </td>
+        <td>
+            <form action="userOrderServlet" method="get">
+                <input type="text" name="id" value="${us.id}" hidden="hidden">
+                <input type="submit" name="orders" value="заказы" >
             </form>
         </td>
     </tr>

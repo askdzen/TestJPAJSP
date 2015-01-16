@@ -7,14 +7,14 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "", catalog = "test")
 @NamedQueries({
-        @NamedQuery(name = "User.getAll", query = "SELECT u from UserEntity u"),
-        @NamedQuery(name = "User.findById", query ="SELECT u from UserEntity u WHERE u.id =:uid")
+        @NamedQuery(name = "UserEntity.getAll", query = "SELECT u from UserEntity u"),
+        @NamedQuery(name = "UserEntity.findById", query ="SELECT u from UserEntity u WHERE u.id =:uid")
 })
 public class UserEntity {
     private String username;
     private String password;
     private int id;
-    private Collection<AccountEntity> accountsById;
+    private Collection<OrderEntity> ordersById;
 
     @Basic
     @Column(name = "username")
@@ -69,13 +69,13 @@ public class UserEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "userByUserid")
-    public Collection<AccountEntity> getAccountsById() {
-        return accountsById;
+    @OneToMany(mappedBy = "userByUserid",fetch = FetchType.EAGER)
+    public Collection<OrderEntity> getOrdersById() {
+        return ordersById;
     }
 
-    public void setAccountsById(Collection<AccountEntity> accountsById) {
-        this.accountsById = accountsById;
+    public void setOrdersById(Collection<OrderEntity> ordersById) {
+        this.ordersById =ordersById;
     }
 
     @Override

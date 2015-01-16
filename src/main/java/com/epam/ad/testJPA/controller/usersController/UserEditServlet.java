@@ -1,7 +1,8 @@
-package com.epam.ad.testJPA.controller;
+package com.epam.ad.testJPA.controller.usersController;
 
 
 import com.epam.ad.testJPA.crud.JPAService;
+import com.epam.ad.testJPA.crud.UserJPAService;
 import com.epam.ad.testJPA.entity.UserEntity;
 
 import javax.inject.Inject;
@@ -12,18 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 
 @WebServlet("userEditServlet")
 public class UserEditServlet extends HttpServlet {
     @Inject
-    JPAService service;
+    UserJPAService service;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String id = request.getParameter("id");
-        UserEntity user =service.getBuId(Integer.parseInt(id));
+        UserEntity user =service.getById(Integer.parseInt(id),"uid");
         user.setUsername(username);
         user.setPassword(password);
         service.update(user);
@@ -32,8 +32,7 @@ public class UserEditServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-//        UserEntity user = (UserEntity) service.em.createNamedQuery("User.findById").setParameter("userid", id).getSingleResult();
-        UserEntity user = service.getBuId(Integer.parseInt(id));
+        UserEntity user = service.getById(Integer.parseInt(id),"uid");
         request.setAttribute("username",user.getUsername());
         request.setAttribute("password",user.getPassword());
         request.setAttribute("id",user.getId());

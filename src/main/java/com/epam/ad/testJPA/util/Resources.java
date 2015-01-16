@@ -8,4 +8,6 @@ public class Resources {
     @Produces
     @PersistenceContext
     public EntityManager em;
+
+
 }

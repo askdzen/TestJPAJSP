@@ -1,8 +1,8 @@
-package com.epam.ad.testJPA.controller;
+package com.epam.ad.testJPA.controller.usersController;
 
-import com.epam.ad.testJPA.crud.JPAService;
+
+import com.epam.ad.testJPA.crud.UserJPAService;
 import com.epam.ad.testJPA.entity.UserEntity;
-
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 
@@ -19,7 +18,7 @@ import java.util.List;
 public class AddUserServlet extends HttpServlet {
 
     @Inject
-    JPAService service;
+    UserJPAService service;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserEntity userEntity = new UserEntity();
@@ -28,9 +27,9 @@ public class AddUserServlet extends HttpServlet {
         service.add(userEntity);
         List<UserEntity> list = service.getAll();
         request.setAttribute("list",list);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/result.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/resultAddUser.jsp");
         requestDispatcher.forward(request, response);
-//response.sendRedirect(request.getContextPath()+"/result");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

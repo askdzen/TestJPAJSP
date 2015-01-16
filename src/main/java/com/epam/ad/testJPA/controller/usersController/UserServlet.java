@@ -1,6 +1,7 @@
-package com.epam.ad.testJPA.controller;
+package com.epam.ad.testJPA.controller.usersController;
 
 import com.epam.ad.testJPA.crud.JPAService;
+import com.epam.ad.testJPA.crud.UserJPAService;
 import com.epam.ad.testJPA.entity.UserEntity;
 
 import javax.inject.Inject;
@@ -14,10 +15,10 @@ import java.io.IOException;
 
 import java.util.List;
 
-@WebServlet(name = "Servlet", urlPatterns = "/")
-public class Servlet extends HttpServlet {
+@WebServlet(name = "userServlet", urlPatterns = "/")
+public class UserServlet extends HttpServlet {
     @Inject
-    JPAService service;
+    UserJPAService service;
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +29,7 @@ public class Servlet extends HttpServlet {
 
         List<UserEntity> list = service.getAll();
         request.setAttribute("list",list);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
         requestDispatcher.forward(request, response);
     }
 }
