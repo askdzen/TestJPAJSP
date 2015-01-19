@@ -19,7 +19,20 @@
     <input id="username" type="text" name="username" value="${username}">
     <label for="password">Password</label>
     <input id="password" type="text" name="password" value="${password}">
+
+    <label for="role">Role</label>
+    <input id="role" type="text" name="role" value="${role}">
+    <select name="selectRole">
+    <c:forEach items="${roles}" var="r">
+
+            <option>${r.role}</option>
+
+
+    </c:forEach>
+    </select>
+
     <input type="submit" name="addUser" value="add user">
+
 </form>
 <hr>
 

@@ -1,44 +1,52 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Registration</title>
+
 </head>
 <body>
-<c:forEach items="${list}" var="u">
-    <table border="1" bgcolor="#00bfff">
-        <caption>Данные пользователя </caption>
+
+<form action="registration" method="POST" title="Заполните поля:">
+    <table style="align-content: center" class="box">
         <tr>
-            <th>Наименование товара</th>
-            <th>Количество</th>
-            <th>Стоимость</th>
-
+            <label for="username" style="align-content: center">Username</label>
+            <input id="username" type="text" name="username" value="${username}">
         </tr>
+        <br/>
 
-        <tr>
-            <td>${u.firstName}</td>
-            <td>${u.lastName}</td>
-            <td>${u.email}</td>
+        <p>
+            <tr>
+                <label for="password" style="align-content: center">Password</label>
+                <input id="password" type="text" name="password" value="${password}">
+            </tr>
+            <br/>
+        <p>
+            <tr>
+                <label for="firstName" style="align-content: center">First Name</label>
+                <input id="firstName" type="text" name="firstName" value="${firstName}">
+            </tr>
+            <br/>
+        <p>
+            <tr>
+                <label for="lastName" style="align-content: center">Last Name</label>
+                <input id="lastName" type="text" name="lastName" value="${lastName}">
+            </tr>
+            <br/>
+        <p>
 
-            <td>
-                <form action="orderEditServlet" method="get">
-                    <input type="text" name="id" value="${ord.id}" hidden="hidden">
-                    <input type="submit" name="editOrder" value="изменить" >
-                </form>
-            </td>
-            <td>
-                <form action="orderDeleteServlet" method="get">
-                    <input type="text" name="id" value="${ord.id}" hidden="hidden">
-                    <input type="submit" name="deleteOrder" value="удалить" >
-                </form>
-            </td>
-            <td>
+            <tr>
+                <label for="email" style="align-content: center">Email</label>
 
-            </td>
-        </tr>
+
+                <input id="email" type="text" name="email" value="${email}">
+            </tr>
     </table>
 
-</c:forEach>
+
+    <input type="submit" name="addUser" value="sign">
+
+</form>
+<h1>${successfully}</h1>
 </body>
 </html>

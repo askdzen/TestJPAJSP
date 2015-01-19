@@ -8,16 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <title>Welcome</title>
+
 </head>
 <body>
-<a href="registration">registration</a>
-<form action="sequrityServlet" method="POST">
+
+       <a href="registration">registration</a>
+
+
+<form action="admin" method="POST" >
     <label for="username">Username</label>
-    <input id="username" type="text" name="username" value="${username}">
+    <input id="username" type="text" name="username" value="${username}" class="placeholder" placeholder="admin@example.com">
     <label for="password">Password</label>
-    <input id="password" type="text" name="password" value="${password}">
+    <input id="password" type="text" name="password" value="${password}" class="placeholder" placeholder="введите пароль">
     <input type="submit" name="addUser" value="sign">
 </form>
+<p>${nosign}</p>
 </body>
 </html>

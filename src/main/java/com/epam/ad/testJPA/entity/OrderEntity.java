@@ -9,8 +9,6 @@ import java.util.Date;
 @NamedQuery(name = "OrderEntity.getAll", query = "SELECT a from OrderEntity a")
 public class OrderEntity {
     private int id;
-    private String item;
-    private int count;
     private String cost;
     private Date date;
     private UserEntity userid;
@@ -26,25 +24,6 @@ public class OrderEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "item")
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    @Basic
-    @Column(name = "count")
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 
     @Basic
     @Column(name = "cost")
@@ -75,8 +54,6 @@ public class OrderEntity {
         OrderEntity that = (OrderEntity) o;
 
         if (id != that.id) return false;
-        if (item != null ? !item.equals(that.item) : that.item != null) return false;
-        if (count != 0 ? !(count==that.count) : that.count != 0) return false;
         if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
 
         return true;
@@ -85,8 +62,6 @@ public class OrderEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (item != null ? item.hashCode() : 0);
-        result = 31 * result + (count != 0 ? count : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         return result;
     }
@@ -100,4 +75,6 @@ public class OrderEntity {
     public void setUserid(UserEntity userByUserid) {
         this.userid = userByUserid;
     }
+
+
 }

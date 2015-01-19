@@ -1,8 +1,8 @@
 package com.epam.ad.testJPA.controller;
 
-import com.epam.ad.testJPA.crud.UserInfoJPAService;
-import com.epam.ad.testJPA.entity.UserInfoEntity;
 
+import com.epam.ad.testJPA.crud.UserJPAService;
+import com.epam.ad.testJPA.entity.UserEntity;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,19 +17,24 @@ import java.util.List;
 @WebServlet("registration")
 public class registrationServlet extends HttpServlet {
     @Inject
-    UserInfoJPAService service;
+    UserJPAService service;
+    @Inject
+    UserEntity userEntity;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        userEntity.setUsername(request.getParameter("username"));
+        userEntity.setPassword(request.getParameter("password"));
+        userEntity.setFirstName(request.getParameter("firstName"));
+        userEntity.setLastName(request.getParameter("lastName"));
+        userEntity.setEmail(request.getParameter("email"));
+        service.add(userEntity);
+        request.setAttribute("successfully","You have successfully registered!");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/registration.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<UserInfoEntity> list=service.getAll();
-        UserInfoEntity userInfoEntity=new UserInfoEntity();
-        userInfoEntity.setFirstName("Askar");
-        userInfoEntity.setLastName("Dzen");
-        userInfoEntity.setEmail("ffdg");
-        service.add(userInfoEntity);
-        request.setAttribute("list",list);
+
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/registration.jsp");
         requestDispatcher.forward(request, response);
     }

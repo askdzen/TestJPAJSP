@@ -1,5 +1,7 @@
 package com.epam.ad.testJPA.entity;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,12 +10,17 @@ import java.util.Collection;
 @Table(name = "user", schema = "", catalog = "test")
 @NamedQueries({
         @NamedQuery(name = "UserEntity.getAll", query = "SELECT u from UserEntity u"),
-        @NamedQuery(name = "UserEntity.findById", query ="SELECT u from UserEntity u WHERE u.id =:uid")
+        @NamedQuery(name = "UserEntity.findById", query ="SELECT u from UserEntity u WHERE u.id =:uid"),
+        @NamedQuery(name = "UserEntity.findByUsername", query ="SELECT u from UserEntity u WHERE u.username =:uname")
 })
 public class UserEntity {
     private String username;
     private String password;
     private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private RoleEntity role;
     private Collection<OrderEntity> ordersById;
 
     @Basic
@@ -46,6 +53,8 @@ public class UserEntity {
     public void setId(int id) {
         this.id = id;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -103,7 +112,7 @@ public class UserEntity {
         this.email = email;
     }
 
-    @OneToMany(mappedBy = "userByUserid",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userid",fetch = FetchType.EAGER)
     public Collection<OrderEntity> getOrdersById() {
         return ordersById;
     }
@@ -111,6 +120,17 @@ public class UserEntity {
     public void setOrdersById(Collection<OrderEntity> ordersById) {
         this.ordersById =ordersById;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "role", referencedColumnName = "id", nullable = false)
+    public RoleEntity getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEntity role) {
+        this.role = role;
+    }
+
 
     @Override
     public String toString() {
