@@ -13,7 +13,7 @@ public class OrderEntity {
     private int count;
     private String cost;
     private Date date;
-    private UserEntity userByUserid;
+    private UserEntity userid;
 
     @Id
     @Column(name = "id")
@@ -93,11 +93,11 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "id", nullable = false)
-    public UserEntity getUserByUserid() {
-        return userByUserid;
+    public UserEntity getUserid() {
+        return userid;
     }
 
-    public void setUserByUserid(UserEntity userByUserid) {
-        this.userByUserid = userByUserid;
+    public void setUserid(UserEntity userByUserid) {
+        this.userid = userByUserid;
     }
 }

@@ -1,10 +1,5 @@
-package com.epam.ad.testJPA.controller.usersController;
+package com.epam.ad.testJPA.controller;
 
-import com.epam.ad.testJPA.crud.JPAService;
-import com.epam.ad.testJPA.crud.UserJPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
-
-import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,23 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import java.util.List;
-
-@WebServlet("userServlet")
-public class UserServlet extends HttpServlet {
-    @Inject
-    UserJPAService service;
-
-
+/**
+ * Created by Admin on 1/16/2015.
+ */
+@WebServlet(name = "StartServlet", urlPatterns = "/")
+public class StartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<UserEntity> list = service.getAll();
-        request.setAttribute("list",list);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
         requestDispatcher.forward(request, response);
     }
 }

@@ -14,9 +14,6 @@ public class UserEntity {
     private String username;
     private String password;
     private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
     private Collection<OrderEntity> ordersById;
 
     @Basic
