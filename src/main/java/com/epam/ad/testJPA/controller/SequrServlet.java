@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 @WebServlet("sequrityServlet")
-public class sequrityServlet extends HttpServlet {
+public class SequrServlet extends HttpServlet {
 @Inject
 SignIn signIn;
 

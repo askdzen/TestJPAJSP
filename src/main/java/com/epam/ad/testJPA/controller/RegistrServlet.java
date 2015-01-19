@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @WebServlet("registration")
-public class registrationServlet extends HttpServlet {
+public class RegistrServlet extends HttpServlet {
     @Inject
     UserJPAService service;
     @Inject
