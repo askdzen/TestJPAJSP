@@ -1,8 +1,9 @@
 package com.epam.ad.testJPA.controller.usersController;
 
 
+import com.epam.ad.testJPA.crud.RoleJPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
+import com.epam.ad.testJPA.entity.User;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,13 +20,19 @@ public class AddUserServlet extends HttpServlet {
 
     @Inject
     UserJPAService service;
+    @Inject
+    RoleJPAService roleJPAService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(request.getParameter("username"));
-        userEntity.setPassword(request.getParameter("password"));
-        service.add(userEntity);
-        List<UserEntity> list = service.getAll();
+        User user = new User();
+        user.setUsername(request.getParameter("username"));
+        user.setPassword(request.getParameter("password"));
+        user.setFirstName(request.getParameter("firstName"));
+        user.setLastName(request.getParameter("lastName"));
+        user.setEmail(request.getParameter("email"));
+        user.setRole(roleJPAService.getRoleByName(request.getParameter("role")));
+        service.add(user);
+        List<User> list = service.getAll();
         request.setAttribute("list",list);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/resultAddUser.jsp");
         requestDispatcher.forward(request, response);

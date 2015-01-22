@@ -1,9 +1,9 @@
 package com.epam.ad.testJPA.controller.usersController;
 
 
-import com.epam.ad.testJPA.crud.JPAService;
+import com.epam.ad.testJPA.crud.RoleJPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
+import com.epam.ad.testJPA.entity.User;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -19,22 +19,37 @@ import java.io.IOException;
 public class UserEditServlet extends HttpServlet {
     @Inject
     UserJPAService service;
+    @Inject
+    RoleJPAService roleJPAService;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email=request.getParameter("email");
         String id = request.getParameter("id");
-        UserEntity user =service.getById(Integer.parseInt(id),"uid");
+        String role=request.getParameter("role");
+        User user =service.getById(Integer.parseInt(id),"uid");
         user.setUsername(username);
         user.setPassword(password);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setRole(roleJPAService.getRoleByName(role));
         service.update(user);
         response.sendRedirect(request.getContextPath());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
-        UserEntity user = service.getById(Integer.parseInt(id),"uid");
+        User user = service.getById(Integer.parseInt(id),"uid");
         request.setAttribute("username",user.getUsername());
         request.setAttribute("password",user.getPassword());
+        request.setAttribute("firstName",user.getFirstName());
+        request.setAttribute("lastName",user.getLastName());
+        request.setAttribute("email",user.getEmail());
+        request.setAttribute("roles",roleJPAService.getAll());
+//        request.setAttribute("role",user.getRole().getRole());
         request.setAttribute("id",user.getId());
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/userEdit.jsp");
         requestDispatcher.forward(request, response);

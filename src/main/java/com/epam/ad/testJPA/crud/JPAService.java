@@ -1,6 +1,9 @@
 package com.epam.ad.testJPA.crud;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.*;
@@ -8,9 +11,11 @@ import java.util.List;
 
 @Stateless
 @Named
-public class JPAService<T> {
+public class JPAService<T>  {
 @Inject
     private EntityManager em;
+
+    private List<T>listAll;
 
     public Class<T> entityClassName;
 
@@ -23,8 +28,8 @@ public class JPAService<T> {
 
     public T add(T userEntity){
 
-        T carFromDB = em.merge(userEntity);
-        return carFromDB;
+        T entityFromDB = em.merge(userEntity);
+        return entityFromDB;
     }
 
 
@@ -42,10 +47,12 @@ public class JPAService<T> {
 
     }
 
+
     public List<T> getAll(){
 
         TypedQuery<T> namedQuery = em.createNamedQuery(entityClassName.getSimpleName()+".getAll", entityClassName);
-        return namedQuery.getResultList();
+        listAll=namedQuery.getResultList();
+        return listAll;
     }
 
     public T getById(int id,String paramName){

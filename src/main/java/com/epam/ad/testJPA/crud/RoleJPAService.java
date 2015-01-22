@@ -1,29 +1,31 @@
 package com.epam.ad.testJPA.crud;
 
 
-import com.epam.ad.testJPA.entity.RoleEntity;
+import com.epam.ad.testJPA.entity.Role;
 import org.jboss.logging.Logger;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 @Stateless
 @Named
-public class RoleJPAService extends JPAService<RoleEntity> {
+public class RoleJPAService extends JPAService<Role> {
     @Inject
     Logger logger;
     @Inject
-    private RoleEntity roleEntity;
+    private Role role;
     @Inject
     private EntityManager entityManager;
 
 
     public RoleJPAService() {
-        super(RoleEntity.class);
+        super(Role.class);
     }
-    public RoleEntity getRoleByName(String roleName){
-        return (RoleEntity) entityManager.createNamedQuery("RoleEntity.findByName").setParameter("rname",roleName).getSingleResult();
+    public Role getRoleByName(String roleName){
+        return (Role) entityManager.createNamedQuery("Role.findByName").setParameter("rname",roleName).getSingleResult();
     }
+
+
 }

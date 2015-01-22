@@ -17,15 +17,15 @@
     <table border="1" bgcolor="#00bfff">
         <caption>Заказы пользователя ${username}</caption>
         <tr>
-            <th>Наименование товара</th>
-            <th>Количество</th>
+
+
             <th>Стоимость</th>
             <th>Дата заказа</th>
         </tr>
 
         <tr>
-            <td>${ord.item}</td>
-            <td>${ord.count}</td>
+
+
             <td>${ord.cost}</td>
             <td>${ord.date}</td>
             <td>

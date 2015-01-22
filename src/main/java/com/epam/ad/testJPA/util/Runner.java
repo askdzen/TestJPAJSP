@@ -1,9 +1,6 @@
 package com.epam.ad.testJPA.util;
 
-import javax.inject.Named;
-import java.util.List;
-import com.epam.ad.testJPA.crud.JPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
+import com.epam.ad.testJPA.entity.User;
 
 
 
@@ -43,8 +40,8 @@ import com.epam.ad.testJPA.entity.UserEntity;
 //            System.out.println();
 //        }
 
-public Class<UserEntity> getTestClass(){
-    Class<UserEntity> testClass1 = UserEntity.class;
+public Class<User> getTestClass(){
+    Class<User> testClass1 = User.class;
     return testClass1;
 }
         public static void main(String[] args) {

@@ -48,5 +48,6 @@
 
 </form>
 <h1>${successfully}</h1>
+<a href="/TestJPAJSP_Web_exploded/">go to home</a>
 </body>
 </html>

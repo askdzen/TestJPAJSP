@@ -1,8 +1,6 @@
 package com.epam.ad.testJPA.controller.usersController;
 
-import com.epam.ad.testJPA.crud.JPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;

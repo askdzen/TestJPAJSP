@@ -13,11 +13,11 @@
 
 </head>
 <body>
-
+<h4>welcome, ${user}</h4>
        <a href="registration">registration</a>
 
 
-<form action="admin" method="POST" >
+<form action="checkUsernamePassword" method="POST" >
     <label for="username">Username</label>
     <input id="username" type="text" name="username" value="${username}" class="placeholder" placeholder="admin@example.com">
     <label for="password">Password</label>

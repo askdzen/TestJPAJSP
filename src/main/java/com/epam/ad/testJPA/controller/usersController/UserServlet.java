@@ -1,8 +1,7 @@
 package com.epam.ad.testJPA.controller.usersController;
 
-import com.epam.ad.testJPA.crud.JPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
+import com.epam.ad.testJPA.entity.User;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -27,7 +26,7 @@ public class UserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<UserEntity> list = service.getAll();
+        List<User> list = service.getAll();
         request.setAttribute("list",list);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
         requestDispatcher.forward(request, response);

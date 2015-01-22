@@ -21,11 +21,11 @@
     <input id="password" type="text" name="password" value="${password}">
 
     <label for="role">Role</label>
-    <input id="role" type="text" name="role" value="${role}">
-    <select name="selectRole">
+
+    <select name="role" id="role">
     <c:forEach items="${roles}" var="r">
 
-            <option>${r.role}</option>
+            <option value="${r.name}">${r.name}</option>
 
 
     </c:forEach>
@@ -42,14 +42,22 @@
         <tr>
             <th>Имя Пользователя</th>
             <th>Пароль</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Email</th>
+            <th>Роль</th>
             <th>Редактировать пользователя</th>
             <th>Удалить пользователя</th>
             <th>Заказы Пользователя</th>
-
+            <th>Добавить Заказ</th>
         </tr>
     <tr>
         <td>${us.username}</td>
         <td>${us.password}</td>
+        <td>${us.firstName}</td>
+        <td>${us.lastName}</td>
+        <td>${us.email}</td>
+        <td>${us.role.name}</td>
         <td>
             <form action="userEditServlet" method="get">
                 <input type="text" name="id" value="${us.id}" hidden="hidden">
@@ -68,9 +76,18 @@
                 <input type="submit" name="orders" value="заказы" >
             </form>
         </td>
+        <td>
+            <form action="orderAddServlet" method="get">
+                <input type="text" name="id" value="${us.id}" hidden="hidden">
+                <input type="submit" name="orders" value="добавить заказ" >
+            </form>
+        </td>
     </tr>
 </table>
 
     </c:forEach>
+
+${update}
 </body>
+<a href="/TestJPAJSP_Web_exploded/">go to home</a>
 </html>

@@ -1,8 +1,11 @@
 package com.epam.ad.testJPA.controller;
 
 
+import com.epam.ad.testJPA.crud.RoleJPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
-import com.epam.ad.testJPA.entity.UserEntity;
+import com.epam.ad.testJPA.entity.User;
+
+
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 
 @WebServlet("registration")
@@ -19,14 +21,17 @@ public class RegistrServlet extends HttpServlet {
     @Inject
     UserJPAService service;
     @Inject
-    UserEntity userEntity;
+    User user;
+    @Inject
+    RoleJPAService roleJPAService;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        userEntity.setUsername(request.getParameter("username"));
-        userEntity.setPassword(request.getParameter("password"));
-        userEntity.setFirstName(request.getParameter("firstName"));
-        userEntity.setLastName(request.getParameter("lastName"));
-        userEntity.setEmail(request.getParameter("email"));
-        service.add(userEntity);
+        user.setUsername(request.getParameter("username"));
+        user.setPassword(request.getParameter("password"));
+        user.setFirstName(request.getParameter("firstName"));
+        user.setLastName(request.getParameter("lastName"));
+        user.setEmail(request.getParameter("email"));
+        user.setRole(roleJPAService.getRoleByName("user"));
+        service.add(user);
         request.setAttribute("successfully","You have successfully registered!");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/registration.jsp");
         requestDispatcher.forward(request, response);
