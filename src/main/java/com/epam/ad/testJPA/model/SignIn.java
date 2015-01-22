@@ -3,6 +3,7 @@ package com.epam.ad.testJPA.model;
 
 
 import com.epam.ad.testJPA.crud.UserJPAService;
+import com.epam.ad.testJPA.entity.Item;
 import com.epam.ad.testJPA.entity.Role;
 import com.epam.ad.testJPA.entity.User;
 import javax.annotation.PostConstruct;
@@ -11,6 +12,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Stateful
@@ -32,6 +35,7 @@ public class SignIn implements Serializable {
         if (userJPAService.usernameIs(username)) {
             user = userJPAService.getUserByUsername(username);
             if (user.getPassword().equals(password))
+
                 return true;
         }
         return false;
@@ -45,10 +49,26 @@ public class SignIn implements Serializable {
         }
         return false;
     }
+    private List<Item> userCartList=new ArrayList<>();
+
+    public void addCart(Item item){
+        userCartList.add(item);
+
+    }
+
+    public List<Item> getUserCartList() {
+        return userCartList;
+    }
+
+    public void userCartRemove(){
+        userCartList.removeAll(userCartList);
+
+    }
 
     @PostConstruct
     public void initNewUser() {
         user = new User();
+
 
     }
 }

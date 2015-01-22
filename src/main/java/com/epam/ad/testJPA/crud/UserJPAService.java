@@ -1,5 +1,6 @@
 package com.epam.ad.testJPA.crud;
 
+import com.epam.ad.testJPA.entity.Item;
 import com.epam.ad.testJPA.entity.User;
 import org.jboss.logging.Logger;
 
@@ -8,11 +9,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Stateless
 @Named
-public class UserJPAService extends JPAService<User> {
+public class UserJPAService extends JPAService<User> implements Serializable{
 
     @Inject
     Logger logger;
@@ -40,6 +43,7 @@ public class UserJPAService extends JPAService<User> {
             return false;
         }
     }
+
 
 
 }

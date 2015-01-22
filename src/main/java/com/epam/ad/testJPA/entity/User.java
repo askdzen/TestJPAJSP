@@ -1,7 +1,9 @@
 package com.epam.ad.testJPA.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -89,5 +91,8 @@ public class User {
     public void setOrders(Collection<Order> orders) {
         this.orders = orders;
     }
+
+
+
 
 }

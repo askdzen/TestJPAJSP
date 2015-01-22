@@ -46,14 +46,15 @@ public class StartServlet extends HttpServlet {
             if (signIn.signIn(username, password)) {
                 if (signIn.signInAdmin(username)) {
                     List<Role> roleEntities = roleJPAService.getAll();
-                    List<User> userEntities= service.getAll();
-                    request.setAttribute("roles",roleEntities);
-                    request.setAttribute("list",userEntities);
+                    List<User> userEntities = service.getAll();
+                    request.setAttribute("roles", roleEntities);
+                    request.setAttribute("list", userEntities);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
                     requestDispatcher.forward(request, response);
                 } else {
                     List<Item> list = itemJPAService.getAll();
-                    request.setAttribute("list",list);
+                    signIn.userCartRemove();
+                    request.setAttribute("list", list);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/welcome.jsp");
                     requestDispatcher.forward(request, response);
                 }
@@ -71,12 +72,13 @@ public class StartServlet extends HttpServlet {
 
         if (request.getServletPath().equals("/")) {
 
-            if (user!=null) {
+            if (user != null) {
 
                 request.getSession().setAttribute("user", signIn.getSessionUser().getUsername());
 
-            }else {
-            request.setAttribute("user", "guest");}
+            } else {
+                request.setAttribute("user", "guest");
+            }
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
             requestDispatcher.forward(request, response);
 
