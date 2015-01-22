@@ -49,21 +49,7 @@ public class SignIn implements Serializable {
         }
         return false;
     }
-    private List<Item> userCartList=new ArrayList<>();
 
-    public void addCart(Item item){
-        userCartList.add(item);
-
-    }
-
-    public List<Item> getUserCartList() {
-        return userCartList;
-    }
-
-    public void userCartRemove(){
-        userCartList.removeAll(userCartList);
-
-    }
 
     @PostConstruct
     public void initNewUser() {

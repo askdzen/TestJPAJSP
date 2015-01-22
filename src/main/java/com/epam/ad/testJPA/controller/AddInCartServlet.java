@@ -3,6 +3,7 @@ package com.epam.ad.testJPA.controller;
 import com.epam.ad.testJPA.crud.ItemJPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
 import com.epam.ad.testJPA.entity.Item;
+import com.epam.ad.testJPA.model.Cart;
 import com.epam.ad.testJPA.model.SignIn;
 
 import javax.inject.Inject;
@@ -17,9 +18,9 @@ import java.util.List;
 
 @WebServlet("addCartServlet")
 
-public class AddCartServlet extends HttpServlet {
+public class AddInCartServlet extends HttpServlet {
     @Inject
-    SignIn service;
+    Cart service;
     @Inject
     ItemJPAService itemJPAService;
 

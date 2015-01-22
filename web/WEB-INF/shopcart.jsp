@@ -12,7 +12,7 @@
     <title></title>
 </head>
 <body>
-<table>
+
     <c:forEach items="${userCart}" var="i">
         <table border="1" bgcolor="#00bfff">
             <caption>Список товаров</caption>
@@ -27,9 +27,9 @@
                 <td>${i.cost}</td>
 
                 <td>
-                    <form action="deleteCartServlet" method="get">
+                    <form action="deleteFromCartServlet" method="get">
                         <input type="text" name="id" value="${i.id}" hidden="hidden">
-                        <input type="submit" name="cart" value="купить" >
+                        <input type="submit" name="cart" value="удалить" >
                     </form>
                 </td>
 

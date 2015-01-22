@@ -6,6 +6,7 @@ import com.epam.ad.testJPA.crud.UserJPAService;
 import com.epam.ad.testJPA.entity.Item;
 import com.epam.ad.testJPA.entity.Role;
 import com.epam.ad.testJPA.entity.User;
+import com.epam.ad.testJPA.model.Cart;
 import com.epam.ad.testJPA.model.SignIn;
 import org.jboss.logging.Logger;
 
@@ -34,9 +35,9 @@ public class StartServlet extends HttpServlet {
     @Inject
     RoleJPAService roleJPAService;
     @Inject
-    Item item;
-    @Inject
     ItemJPAService itemJPAService;
+    @Inject
+    Cart cart;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -53,7 +54,7 @@ public class StartServlet extends HttpServlet {
                     requestDispatcher.forward(request, response);
                 } else {
                     List<Item> list = itemJPAService.getAll();
-                    signIn.userCartRemove();
+                    cart.userCartRemove();
                     request.setAttribute("list", list);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/welcome.jsp");
                     requestDispatcher.forward(request, response);
