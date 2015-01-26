@@ -23,7 +23,7 @@
     <label for="role">Role</label>
 
     <select name="role" id="role">
-    <c:forEach items="${roles}" var="r">
+    <c:forEach items="${roleList}" var="r">
 
             <option value="${r.name}">${r.name}</option>
 
@@ -36,7 +36,7 @@
 </form>
 <hr>
 
-<c:forEach items="${list}" var="us">
+<c:forEach items="${userList}" var="us">
     <table border="1" bgcolor="#00bfff">
         <caption>Список пользователей</caption>
         <tr>

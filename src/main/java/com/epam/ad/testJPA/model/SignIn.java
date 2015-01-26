@@ -9,6 +9,7 @@ import com.epam.ad.testJPA.entity.User;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class SignIn implements Serializable {
     @Inject
     UserJPAService userJPAService;
 
-    private User user;
+    public User user;
 
     public User getSessionUser() {
         return user;
@@ -50,9 +51,13 @@ public class SignIn implements Serializable {
         return false;
     }
 
+    public User getUser() {
+        return user;
+    }
 
     @PostConstruct
     public void initNewUser() {
+
         user = new User();
 
 

@@ -13,7 +13,7 @@
 
 </head>
 <body>
-<h4>welcome, ${user}</h4>
+<h4>welcome, ${signIn.user.username}  ${user}</h4>
        <a href="registration">registration</a>
 
 

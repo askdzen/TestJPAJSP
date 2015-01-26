@@ -17,9 +17,10 @@ import java.util.List;
 public class Cart implements Serializable {
     @Inject
     Logger logger;
-    private List<Item> userCartList=new ArrayList<>();
+    int indexOf;
+    private List<Item> userCartList = new ArrayList<>();
 
-    public void addCart(Item item){
+    public void addCart(Item item) {
         userCartList.add(item);
 
     }
@@ -28,13 +29,20 @@ public class Cart implements Serializable {
         return userCartList;
     }
 
-    public void userCartRemove(){
+    public void userCartRemove() {
         userCartList.removeAll(userCartList);
 
     }
-    public void deleteItemFromCart(Item item){
-        logger.info("Item_id in the Cart methods: "+item.getId());
-       userCartList.remove(item);
+
+    public void deleteItemFromCart(Item item) {
+        logger.info("Item_id in the Cart methods: " + item.getId());
+        for (Item item1 : userCartList) {
+            if (item1.getId() == (item.getId())) {
+                indexOf = userCartList.indexOf(item1);
+            }
+        }
+if (userCartList.size()>0)
+        userCartList.remove(indexOf);
 
     }
 

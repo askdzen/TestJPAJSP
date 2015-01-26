@@ -9,33 +9,38 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Shop Cart</title>
 </head>
 <body>
+${signIn.user.username}
+<c:forEach items="${userCart}" var="i">
 
-    <c:forEach items="${userCart}" var="i">
-        <table border="1" bgcolor="#00bfff">
-            <caption>Список товаров</caption>
-            <tr>
-                <th>Название товара</th>
-                <th>стоимость</th>
+    <table border="1" bgcolor="#00bfff">
+        <caption>Список товаров</caption>
+        <tr>
+            <th>Название товара</th>
+            <th>стоимость</th>
+            <th>количество</th>
 
-                <th>удалить</th>
-            </tr>
-            <tr>
-                <td>${i.name}</td>
-                <td>${i.cost}</td>
+            <th>удалить</th>
+        </tr>
+        <tr>
+            <td>${i.name}</td>
+            <td>${i.cost}</td>
+            <td> ${count}</td>
+            <td>
+                <form action="deleteFromCartServlet" method="get">
+                    <input type="text" name="id" value="${i.id}" hidden="hidden">
+                    <input type="submit" name="cart" value="удалить">
+                </form>
+            </td>
 
-                <td>
-                    <form action="deleteFromCartServlet" method="get">
-                        <input type="text" name="id" value="${i.id}" hidden="hidden">
-                        <input type="submit" name="cart" value="удалить" >
-                    </form>
-                </td>
+        </tr>
+    </table>
 
-            </tr>
-        </table>
-
-    </c:forEach>
+</c:forEach>
 </body>
+<form action="issue" method="get">
+    <input type="submit" value="approved">
+</form>
 </html>

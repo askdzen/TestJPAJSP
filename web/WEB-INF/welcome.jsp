@@ -17,7 +17,7 @@
 </form>
 <h1>Welcome!</h1>
 <table>
-    <c:forEach items="${list}" var="i">
+    <c:forEach items="${itemList}" var="i">
         <table border="1" bgcolor="#00bfff">
             <caption>Список товаров</caption>
             <tr>

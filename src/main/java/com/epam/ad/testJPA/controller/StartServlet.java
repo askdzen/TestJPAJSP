@@ -46,16 +46,15 @@ public class StartServlet extends HttpServlet {
             String password = request.getParameter("password");
             if (signIn.signIn(username, password)) {
                 if (signIn.signInAdmin(username)) {
-                    List<Role> roleEntities = roleJPAService.getAll();
-                    List<User> userEntities = service.getAll();
-                    request.setAttribute("roles", roleEntities);
-                    request.setAttribute("list", userEntities);
+
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
                     requestDispatcher.forward(request, response);
                 } else {
-                    List<Item> list = itemJPAService.getAll();
-                    cart.userCartRemove();
-                    request.setAttribute("list", list);
+
+                    if (cart.getUserCartList().size()>0){
+                        cart.userCartRemove();
+                    }
+
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/welcome.jsp");
                     requestDispatcher.forward(request, response);
                 }
@@ -72,13 +71,10 @@ public class StartServlet extends HttpServlet {
         logger.info(request.getContextPath());
 
         if (request.getServletPath().equals("/")) {
+            logger.info(signIn.getUser().getUsername());
+            if (signIn.getUser().getUsername()==null) {
 
-            if (user != null) {
-
-                request.getSession().setAttribute("user", signIn.getSessionUser().getUsername());
-
-            } else {
-                request.setAttribute("user", "guest");
+               request.setAttribute("user", "guest");
             }
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
             requestDispatcher.forward(request, response);
