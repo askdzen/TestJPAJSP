@@ -1,6 +1,9 @@
 package com.epam.ad.testJPA.entity;
 
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +15,8 @@ import java.util.List;
 })
 
 @Table(name = "`order`")
-public class Order {
+
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

@@ -5,6 +5,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 @IdClass(value = OrderItemPK.class)
+@NamedQueries({
+        @NamedQuery(name = "OrderItem.getAll", query = "SELECT o from OrderItem o"),
+        @NamedQuery(name = "OrderItem.findByKey", query = "SELECT o from OrderItem o WHERE o.order_id =:oid AND o.item_id=:iid"),
+        @NamedQuery(name = "OrderItem.update", query = "UPDATE OrderItem o SET o.itemQty =:qty where o.order_id = :oid and o.item_id=:iid"),
+        @NamedQuery(name = "OrderItem.getAllByOrder",query = "SELECT o from OrderItem o WHERE o.order_id =:oid")
+
+})
 public class OrderItem {
     @Id
     @Column(name = "order_id")

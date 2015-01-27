@@ -2,9 +2,13 @@ package com.epam.ad.testJPA.controller.orderController;
 
 import com.epam.ad.testJPA.crud.ItemJPAService;
 import com.epam.ad.testJPA.crud.OrderJPAService;
+import com.epam.ad.testJPA.crud.Order_ItemJPAService;
 import com.epam.ad.testJPA.crud.UserJPAService;
 import com.epam.ad.testJPA.entity.Item;
 import com.epam.ad.testJPA.entity.Order;
+import com.epam.ad.testJPA.entity.OrderItem;
+import com.epam.ad.testJPA.model.Cart;
+import com.epam.ad.testJPA.model.SignIn;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -20,11 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet({
-        "orderAddServlet",
-        "itemsAddServlet"
+        "orderAdd",
+        "itemCountUpdate",
+        "cartAdd",
+        "deleteFromCart"
+
 })
 public class OrderAddServlet extends HttpServlet {
-
+    @Inject
+    Cart cart;
+    @Inject
+    SignIn signIn;
     @Inject
     ItemJPAService itemJPAService;
     @Inject
@@ -35,40 +45,85 @@ public class OrderAddServlet extends HttpServlet {
     Logger logger;
     @Inject
     Order order;
+    @Inject
+    OrderItem orderItem;
+    @Inject
+    Order_ItemJPAService order_itemJPAService;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        if(request.getServletPath().equals("/itemCountUpdate")){
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            int itemId = Integer.parseInt(request.getParameter("itemId"));
+            int count = Integer.parseInt(request.getParameter("count"));
+            orderItem=order_itemJPAService.getOrderItemByKey(orderId,itemId);
+            orderItem.setItemQty(count);
+            order_itemJPAService.update(orderItem);
+            logger.info("Обновление " + orderItem.getOrderId()+" "+orderItem.getItemId());
+            List<OrderItem> orderItemList = order_itemJPAService.getAllByOrder(order.getId());
+            request.setAttribute("orderItemList",orderItemList);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/shopcart.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       if (request.getServletPath().equals("/orderAddServlet")){
-           String userid = request.getParameter("id");
 
-       }
-
-        Order findOrder;
-        List<Item>items=new ArrayList<>();
-        Item item1= itemJPAService.getById(14,"iid");
-        Item item2= itemJPAService.getById(15,"iid");
-        items.add(item1);
-        items.add(item2);
-
-        for (Item item : items) {
-            logger.info("Item Name"+item.getName());
+        if(request.getServletPath().equals("/itemCountUpdate")){
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            int itemId = Integer.parseInt(request.getParameter("itemId"));
+            int count = Integer.parseInt(request.getParameter("count"));
+            request.setAttribute("orderId",orderId);
+            request.setAttribute("itemId",itemId);
+            request.setAttribute("count",count);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/changeCount.jsp");
+            requestDispatcher.forward(request, response);
         }
+        if(request.getServletPath().equals("/orderAdd")){
+            if (cart.getUserCartList().size()>0){
 
-//        order.setDate(Date.valueOf("15.01.2015"));
-        findOrder=orderJPAService.getById(6,"oid");
-        logger.info("Order for user"+findOrder.getUser().getUsername()+"Order id"+ findOrder.getId());
-        findOrder.setItems(items);
-        logger.info("findOrders param "+findOrder.getId()+", "+findOrder.getCost());
-        for (Item item : findOrder.getItems()) {
-            logger.info("Items in order"+item.getName());
+                logger.info("order id : " + order.getId());
+                List<OrderItem> orderItemList = order_itemJPAService.getAllByOrder(order.getId());
+                request.setAttribute("orderItemList",orderItemList);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/shopcart.jsp");
+                requestDispatcher.forward(request, response);
+            }else {
+                request.setAttribute("noItems","Вы ничего не выбрали для покупок");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/shopcart.jsp");
+                requestDispatcher.forward(request, response);
+            }
         }
+        if  (request.getServletPath().equals("/cartAdd")){
+            logger.info("cartList size= " + cart.getUserCartList().size());
+            if (cart.getUserCartList().size()==0){
+                order.setUser(signIn.getUser());
+                order.setId(orderJPAService.add(order).getId());
+                orderJPAService.add(order);
+                if (cart.unicOrderItem(order.getId(),Integer.parseInt(request.getParameter("id")))){
+                    cart.addCart(itemJPAService.getById(Integer.parseInt(request.getParameter("id")), "iid"));
+                    order.setItems(cart.getUserCartList());
+                    orderJPAService.update(order);
+                }
 
-        orderJPAService.add(findOrder);
-        request.setAttribute("update","База обновлена");
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
-        requestDispatcher.forward(request, response);
+            }
+            if (cart.unicOrderItem(order.getId(),Integer.parseInt(request.getParameter("id")))){
 
+                cart.addCart(itemJPAService.getById(Integer.parseInt(request.getParameter("id")), "iid"));
+                order.setItems(cart.getUserCartList());
+                orderJPAService.update(order);
+            }
+            request.setAttribute("cartSize",cart.getUserCartList().size());
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/welcome.jsp");
+            requestDispatcher.forward(request, response);
+        }
+        if (request.getServletPath().equals("/deleteFromCart")){
+            int itemId = Integer.parseInt(request.getParameter("itemId"));
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            logger.info("Item id in the DeleteFromCartServlet "+itemId);
+            logger.info("Order id in the DeleteFromCartServlet "+orderId);
+            cart.deleteItemFromCart(itemId,orderId);
+            List<OrderItem> orderItemList = order_itemJPAService.getAllByOrder(order.getId());
+            request.setAttribute("orderItemList",orderItemList);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/shopcart.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 }
