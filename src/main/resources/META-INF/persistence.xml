@@ -3,8 +3,8 @@
 
     <!--<persistence-unit name="COLIBRI" transaction-type="RESOURCE_LOCAL">-->
         <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
-        <!--<class>com.epam.ad.testJPA.entity.AccountEntity</class>-->
-        <!--<class>com.epam.ad.testJPA.entity.UserEntity</class>-->
+        <!--<class>com.epam.ad.testjpa.entity.AccountEntity</class>-->
+        <!--<class>com.epam.ad.testjpa.entity.UserEntity</class>-->
 
         <!--<properties>-->
             <!--<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>-->
